@@ -1,0 +1,34 @@
+---
+title: "Marketing"
+description: "Create campaigns, manage automations, segment audiences, and track marketing performance."
+---
+
+The Marketing category provides tools for creating and managing marketing activities through Shopify's marketing APIs. These tools operate on campaigns, automations, audience segments, and marketing event tracking.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `marketing_events_list` | List marketing events and campaigns | Startup |
+| `marketing_events_create` | Create a new marketing event | Small Business |
+| `marketing_events_update` | Update an existing marketing event | Small Business |
+| `marketing_events_delete` | Delete a marketing event | Business |
+| `marketing_activities` | List marketing activities with performance data | Business |
+| `marketing_automations` | Manage marketing automations and flows | Corporate |
+
+## Example Commands
+
+```
+Show me all active marketing campaigns
+```
+Routes to `marketing_events_list` with active status filter.
+
+```
+Create a marketing event for the Spring Sale starting March 15
+```
+Routes to `marketing_events_create` with title and date parameters.
+
+```
+What's the performance of our email campaigns this month?
+```
+Routes to `marketing_activities` with channel and date filters.

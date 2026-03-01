@@ -1,0 +1,47 @@
+---
+title: "Customers"
+description: "Search, create, update, tag, segment, and manage the customer lifecycle."
+---
+
+The Customers category provides tools for managing the full customer record in Shopify. From creating new customer profiles to segmenting your audience by purchase behavior, these tools operate directly against Shopify's customer data through the Admin GraphQL API.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `customers_list` | List customers with filters for creation date, order count, and spend | Startup |
+| `customers_search` | Search customers by name, email, phone, or tag | Startup |
+| `customers_get` | Retrieve a single customer profile with full detail | Startup |
+| `customers_create` | Create a new customer record | Small Business |
+| `customers_update` | Update customer information, notes, and tags | Small Business |
+| `customers_delete` | Remove a customer record (GDPR-compliant deletion) | Corporate |
+| `customers_orders` | List all orders for a specific customer | Startup |
+| `customers_count` | Count customers matching specified criteria | Startup |
+| `customers_tags` | Manage tags on a customer record | Small Business |
+| `customers_segment` | Query customer segments using Shopify's segmentation filters | Business |
+
+## Example Commands
+
+```
+Show me all customers from Massachusetts
+```
+Routes to `customers_search` with address state filter.
+
+```
+How many customers have placed more than 5 orders?
+```
+Routes to `customers_count` with order count threshold.
+
+```
+Tag customer john@example.com as VIP
+```
+Routes to `customers_tags` with the add operation.
+
+```
+Show me all orders from customer #7821
+```
+Routes to `customers_orders` with customer ID.
+
+## Data Privacy
+
+Customer tools respect Shopify's GDPR compliance framework. The `customers_delete` tool triggers proper data redaction through Shopify's deletion pipeline. LeMay Commerce does not cache, store, or transmit customer personally identifiable information beyond the scope of the API request.

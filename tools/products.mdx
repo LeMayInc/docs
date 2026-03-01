@@ -1,0 +1,45 @@
+---
+title: "Products"
+description: "Create, update, publish, and organize products and variants across channels."
+---
+
+The Products category covers the full product catalog lifecycle — creating new products, managing variants and options, publishing to sales channels, and organizing with collections and tags.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `products_list` | List products with filters for status, type, vendor, and collection | Startup |
+| `products_search` | Search products by title, SKU, barcode, or tag | Startup |
+| `products_get` | Retrieve a single product with all variants and media | Startup |
+| `products_create` | Create a new product with variants, pricing, and media | Small Business |
+| `products_update` | Update product details, pricing, or metadata | Small Business |
+| `products_delete` | Remove a product from the catalog | Business |
+| `products_variants` | List and manage variants for a product | Startup |
+| `products_images` | Manage product images and media | Small Business |
+| `products_collections` | Add or remove products from collections | Small Business |
+| `products_publish` | Publish or unpublish products to sales channels | Business |
+| `products_count` | Count products matching specified criteria | Startup |
+| `products_bulk_update` | Update multiple products in a single operation | Corporate |
+
+## Example Commands
+
+```
+Show me all draft products
+```
+Routes to `products_list` with status filter `DRAFT`.
+
+```
+Create a new product called "Heritage Wool Scarf" at $89.00
+```
+Routes to `products_create` with title and price parameters.
+
+```
+Update the price of SKU-WS-001 to $94.00
+```
+Routes to `products_update` targeting the specific variant by SKU.
+
+```
+Publish all products in the "Winter Collection" to the online store
+```
+Routes to `products_publish` with collection and channel filters.

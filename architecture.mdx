@@ -1,0 +1,95 @@
+---
+title: "Architecture"
+description: "The MCP foundation, intent classification system, and GraphQL execution pipeline."
+---
+
+LeMay Commerce is built on three layers: the Model Context Protocol interface, the intent classification engine, and the Shopify GraphQL execution pipeline. Each layer is deterministic. There is no probabilistic routing, no fuzzy matching, and no fallback to generic responses. A command either resolves to a specific tool or it does not.
+
+## System Architecture
+
+```
+Natural Language Command
+        │
+        ▼
+┌─────────────────────┐
+│  MCP Server Layer   │  Receives tool calls from AI clients
+│  (TypeScript)       │  via the Model Context Protocol
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  Intent Classifier  │  Routes natural language to one of
+│  (24 Categories)    │  129 discrete commerce tools
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  GraphQL Engine     │  Constructs and executes mutations
+│  (Admin API)        │  and queries against Shopify
+└────────┬────────────┘
+         │
+         ▼
+   Structured Response
+```
+
+## Model Context Protocol
+
+The [Model Context Protocol](https://modelcontextprotocol.io) is an open standard for connecting AI applications to external tools and data sources. LeMay Commerce implements an MCP server that exposes 129 tools — each defined with a precise schema, input parameters, and return types.
+
+When an AI client (Claude, Cursor, or any MCP-compatible application) connects to LeMay Commerce, it receives a manifest of all available tools. The AI model selects the appropriate tool based on the user's natural language input, and the MCP server executes it.
+
+This architecture means LeMay Commerce is not embedded in any single AI client. It works with any application that speaks MCP.
+
+## Intent Classification
+
+The intent classifier maps incoming requests to one of 24 commerce categories:
+
+<Columns cols={4}>
+  <Card title="Orders" icon="receipt" />
+  <Card title="Customers" icon="users" />
+  <Card title="Products" icon="box" />
+  <Card title="Inventory" icon="warehouse" />
+  <Card title="Fulfillment" icon="truck" />
+  <Card title="Shipping" icon="ship" />
+  <Card title="Discounts" icon="percent" />
+  <Card title="Gift Cards" icon="gift" />
+  <Card title="Marketing" icon="bullhorn" />
+  <Card title="Content" icon="file-lines" />
+  <Card title="Themes" icon="palette" />
+  <Card title="Analytics" icon="chart-line" />
+  <Card title="Metafields" icon="tags" />
+  <Card title="Metaobjects" icon="cubes" />
+  <Card title="Files" icon="folder" />
+  <Card title="Locales" icon="globe" />
+  <Card title="Markets" icon="earth-americas" />
+  <Card title="Publications" icon="newspaper" />
+  <Card title="Checkouts" icon="cart-shopping" />
+  <Card title="Draft Orders" icon="file-invoice" />
+  <Card title="Locations" icon="location-dot" />
+  <Card title="Fulfillment Orders" icon="boxes-stacked" />
+  <Card title="Script Tags" icon="code" />
+  <Card title="Price Rules" icon="tag" />
+</Columns>
+
+Within each category, the classifier resolves to a specific tool. The `orders` category alone contains tools for listing, searching, creating, updating, canceling, refunding, and fulfilling orders — each a distinct operation with its own GraphQL mutation or query.
+
+## GraphQL Execution
+
+Every tool in LeMay Commerce maps to a Shopify Admin GraphQL operation. No REST API calls exist in the system. Shopify designated GraphQL as the canonical Admin API in April 2025, and LeMay Commerce was built exclusively on that foundation.
+
+A tool execution follows this sequence:
+
+1. **Parameter extraction** — Input values are parsed from the tool call and validated against the schema
+2. **Query construction** — A GraphQL query or mutation is assembled with the extracted parameters
+3. **API execution** — The operation is sent to the Shopify Admin API with the store's access token
+4. **Response normalization** — The GraphQL response is transformed into a structured format suitable for the AI client
+
+There is no caching layer between the tool and the API. Every execution returns live data from your store.
+
+## Security Model
+
+LeMay Commerce operates within Shopify's OAuth permission model. The access token granted during installation determines which API scopes are available. No data leaves the execution pipeline — commands are processed, executed against Shopify's API, and the response is returned to the AI client. LeMay does not store, log, or transmit your store data.
+
+<Card title="Security Policy" icon="shield" href="/resources/security">
+  Read the full security policy including vulnerability reporting procedures.
+</Card>

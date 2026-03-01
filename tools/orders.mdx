@@ -1,0 +1,61 @@
+---
+title: "Orders"
+description: "List, search, create, update, cancel, refund, and fulfill orders."
+---
+
+The Orders category is the most frequently invoked set of tools in LeMay Commerce. It covers the complete order lifecycle from creation through fulfillment, including cancellation, refund processing, and note management.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `orders_list` | List orders with filters for status, date range, and financial status | Startup |
+| `orders_search` | Search orders by order number, customer name, email, or product | Startup |
+| `orders_get` | Retrieve a single order by ID with full detail | Startup |
+| `orders_create` | Create a new order programmatically | Small Business |
+| `orders_update` | Update order notes, tags, and metadata | Small Business |
+| `orders_cancel` | Cancel an open order with optional restock and refund | Business |
+| `orders_close` | Close an order (mark as archived) | Startup |
+| `orders_refund` | Process a full or partial refund | Business |
+| `orders_fulfill` | Create a fulfillment with tracking information | Small Business |
+| `orders_risk` | Retrieve fraud risk assessment for an order | Corporate |
+| `orders_transactions` | List payment transactions associated with an order | Business |
+| `orders_count` | Count orders matching specified criteria | Startup |
+
+## Example Commands
+
+These natural language commands are routed to the appropriate orders tool automatically:
+
+```
+Show me all unfulfilled orders from this week
+```
+Routes to `orders_list` with status filter `unfulfilled` and date range for the current week.
+
+```
+Find order #1042
+```
+Routes to `orders_search` with order number parameter.
+
+```
+Cancel order #1089 and restock the items
+```
+Routes to `orders_cancel` with restock flag enabled.
+
+```
+Refund $45.00 on order #1067
+```
+Routes to `orders_refund` with partial refund amount.
+
+## GraphQL Operations
+
+Every orders tool maps to a specific Shopify Admin GraphQL operation:
+
+- **List/Search**: `orders` query with filter arguments
+- **Get**: `order` query by ID
+- **Create**: `orderCreate` mutation
+- **Update**: `orderUpdate` mutation
+- **Cancel**: `orderCancel` mutation
+- **Refund**: `refundCreate` mutation
+- **Fulfill**: `fulfillmentCreate` mutation
+
+All operations use the `2025-01` or later API version exclusively.

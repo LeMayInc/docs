@@ -1,0 +1,39 @@
+---
+title: "Intent Classification"
+sidebarTitle: "Intents"
+description: "How natural language commands are routed to specific commerce tools."
+---
+
+The intent classification engine is the routing layer between natural language input and specific tool execution. When you issue a command like "show me today's orders," the system must determine which of the 129 available tools to invoke and what parameters to extract.
+
+## How Classification Works
+
+Intent classification in LeMay Commerce is not performed by the MCP server itself. It is performed by the AI model (Claude, GPT, or whichever model powers your MCP client). The MCP server provides the AI model with a complete tool manifest — 129 tools, each with a name, description, and parameter schema. The AI model reads the manifest and selects the appropriate tool based on the user's natural language input.
+
+This means:
+
+- **No custom NLP model** — LeMay Commerce does not train or deploy a separate classification model
+- **Model-agnostic** — The quality of classification depends on the AI model in your client, not on LeMay Commerce
+- **Schema-driven** — The tool descriptions and parameter schemas are the "training data" — they must be precise enough for any capable AI model to route correctly
+
+## Category Routing
+
+The 24 categories provide semantic grouping, but the AI model operates at the individual tool level. When a user says "how many units of SKU-1234 do we have," the model evaluates all 129 tool descriptions and selects `inventory_levels` — not because it first classifies the intent as "inventory" and then selects within that category, but because the `inventory_levels` tool description best matches the user's request.
+
+## Ambiguity Resolution
+
+When a command could map to multiple tools, the AI model uses the parameter schema to disambiguate. For example:
+
+- "Show me orders" → `orders_list` (no parameters needed)
+- "Find order #1042" → `orders_search` (requires search term)
+- "How many orders this week?" → `orders_count` (returns count, not list)
+
+The tool descriptions are written to minimize overlap. Each tool occupies a distinct operational niche.
+
+## Improving Classification
+
+If you find that your AI client consistently selects the wrong tool for a given command, the issue is in the model's interpretation, not in LeMay Commerce. You can improve results by:
+
+1. Being more specific in your commands ("list the last 10 orders" vs. "show me orders")
+2. Using terminology that matches the tool descriptions ("fulfillment" vs. "shipping status")
+3. Using a more capable AI model (Claude Opus typically outperforms smaller models on tool selection)

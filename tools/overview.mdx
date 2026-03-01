@@ -1,0 +1,118 @@
+---
+title: "Tools Overview"
+sidebarTitle: "Overview"
+description: "129 commerce tools across 24 categories. The complete operational surface of a Shopify store."
+---
+
+LeMay Commerce exposes 129 discrete tools, each mapped to a specific Shopify Admin GraphQL operation. Tools are organized into 24 categories that correspond to the fundamental domains of commerce operations.
+
+## Tool Availability by Tier
+
+Not every tier has access to every tool. The table below maps subscription levels to tool counts. Higher tiers unlock progressively more specialized operations — automation workflows, bulk mutations, and advanced analytics.
+
+| Tier | Tools | Categories |
+|------|-------|------------|
+| Startup | 65 | 12 core categories |
+| Small Business | 80 | 16 categories |
+| Business | 105 | 20 categories |
+| Corporate | 129 | All 24 categories |
+| Enterprise | 129 | All 24 + automation workflows |
+| LeMay Agency | 129 | All 24 + dedicated account manager |
+
+## Categories
+
+<Columns cols={2}>
+  <Card title="Orders" icon="receipt" href="/tools/orders">
+    List, search, create, update, cancel, refund, and fulfill orders. The most frequently used category in the system.
+  </Card>
+  <Card title="Customers" icon="users" href="/tools/customers">
+    Search, create, update, tag, segment, and manage the full customer lifecycle.
+  </Card>
+  <Card title="Products" icon="box" href="/tools/products">
+    Create, update, publish, and organize products and variants across channels.
+  </Card>
+  <Card title="Inventory" icon="warehouse" href="/tools/inventory">
+    Track levels, adjust quantities, transfer between locations, and set alerts.
+  </Card>
+  <Card title="Fulfillment" icon="truck" href="/tools/fulfillment">
+    Ship orders, generate labels, track packages, and process returns.
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/tools/analytics">
+    Revenue reports, product performance, customer insights, and traffic analysis.
+  </Card>
+  <Card title="Marketing" icon="bullhorn" href="/tools/marketing">
+    Create campaigns, manage automations, segment audiences, and track performance.
+  </Card>
+  <Card title="Discounts" icon="percent" href="/tools/discounts">
+    Create and manage discount codes, automatic discounts, and promotional rules.
+  </Card>
+  <Card title="Content" icon="file-lines" href="/tools/content">
+    Manage pages, blog posts, and custom content through the Shopify CMS.
+  </Card>
+  <Card title="Shipping" icon="ship">
+    Configure shipping zones, rates, carrier services, and delivery profiles.
+  </Card>
+  <Card title="Gift Cards" icon="gift">
+    Issue, manage, and track gift cards across your store.
+  </Card>
+  <Card title="Themes" icon="palette">
+    Deploy, configure, and manage storefront themes.
+  </Card>
+  <Card title="Metafields" icon="tags">
+    Create and manage custom metadata on any Shopify resource.
+  </Card>
+  <Card title="Metaobjects" icon="cubes">
+    Define and manage custom data structures for advanced content modeling.
+  </Card>
+  <Card title="Files" icon="folder">
+    Upload, organize, and manage media files in the Shopify file system.
+  </Card>
+  <Card title="Locales" icon="globe">
+    Manage translations and multi-language content across your store.
+  </Card>
+  <Card title="Markets" icon="earth-americas">
+    Configure international markets, pricing, and regional settings.
+  </Card>
+  <Card title="Publications" icon="newspaper">
+    Control product visibility across sales channels and publishing targets.
+  </Card>
+  <Card title="Checkouts" icon="cart-shopping">
+    Manage abandoned checkouts, recovery flows, and checkout configuration.
+  </Card>
+  <Card title="Draft Orders" icon="file-invoice">
+    Create and manage draft orders for phone orders, B2B, and custom invoicing.
+  </Card>
+  <Card title="Locations" icon="location-dot">
+    Manage store locations, warehouse addresses, and fulfillment origins.
+  </Card>
+  <Card title="Fulfillment Orders" icon="boxes-stacked">
+    Advanced fulfillment routing, third-party logistics, and fulfillment service management.
+  </Card>
+  <Card title="Script Tags" icon="code">
+    Inject custom scripts into storefront pages for tracking and functionality.
+  </Card>
+  <Card title="Price Rules" icon="tag">
+    Create complex pricing rules for volume discounts, tiered pricing, and conditional promotions.
+  </Card>
+</Columns>
+
+## Tool Anatomy
+
+Every tool in LeMay Commerce follows the same structural pattern:
+
+```typescript
+{
+  name: "orders_list",           // Unique tool identifier
+  category: "orders",            // Parent category
+  description: "List orders...", // Natural language description
+  inputSchema: { ... },         // JSON Schema for parameters
+  handler: async (params) => {  // Execution function
+    // 1. Validate parameters
+    // 2. Construct GraphQL query
+    // 3. Execute against Shopify Admin API
+    // 4. Return structured response
+  }
+}
+```
+
+The AI client sees the tool name, description, and input schema. When it selects a tool and provides parameters, the handler executes the corresponding GraphQL operation and returns the result. There is no intermediate interpretation layer.

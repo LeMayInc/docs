@@ -1,0 +1,35 @@
+---
+title: "Discounts"
+description: "Create and manage discount codes, automatic discounts, and promotional rules."
+---
+
+The Discounts category manages Shopify's native discount system — both code-based discounts that customers enter at checkout and automatic discounts that apply based on cart conditions.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `discounts_list` | List all discount codes and automatic discounts | Startup |
+| `discounts_get` | Retrieve details of a specific discount | Startup |
+| `discounts_create_code` | Create a new discount code | Small Business |
+| `discounts_create_automatic` | Create an automatic discount | Business |
+| `discounts_update` | Update discount parameters | Small Business |
+| `discounts_delete` | Delete a discount | Business |
+| `discounts_count` | Count active, scheduled, and expired discounts | Startup |
+
+## Example Commands
+
+```
+Create a 20% off discount code SPRING20 for the entire store
+```
+Routes to `discounts_create_code` with percentage value and scope.
+
+```
+Show me all discounts expiring this week
+```
+Routes to `discounts_list` with end date range filter.
+
+```
+Create an automatic discount: free shipping on orders over $75
+```
+Routes to `discounts_create_automatic` with shipping type and minimum order value.

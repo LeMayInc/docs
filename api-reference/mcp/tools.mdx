@@ -1,0 +1,105 @@
+---
+title: "MCP Tools"
+sidebarTitle: "Tools"
+description: "How tools are defined, invoked, and executed in the LeMay Commerce MCP server."
+---
+
+Every tool in LeMay Commerce follows the MCP tool specification. This page documents the tool structure, invocation format, and response format.
+
+## Tool Definition
+
+Each tool is defined with three components:
+
+```typescript
+{
+  name: "orders_list",
+  description: "List orders with optional filters for status, date range, financial status, and fulfillment status. Returns order details including line items, customer info, and payment status.",
+  inputSchema: {
+    type: "object",
+    properties: {
+      status: {
+        type: "string",
+        enum: ["open", "closed", "cancelled", "any"],
+        description: "Filter by order status"
+      },
+      created_at_min: {
+        type: "string",
+        format: "date-time",
+        description: "Minimum creation date (ISO 8601)"
+      },
+      created_at_max: {
+        type: "string",
+        format: "date-time",
+        description: "Maximum creation date (ISO 8601)"
+      },
+      limit: {
+        type: "number",
+        minimum: 1,
+        maximum: 250,
+        description: "Maximum number of orders to return"
+      }
+    }
+  }
+}
+```
+
+The `name` uniquely identifies the tool. The `description` tells the AI model when to use it. The `inputSchema` defines the parameter contract.
+
+## Invocation
+
+The AI client invokes a tool by sending a `tools/call` request:
+
+```json
+{
+  "method": "tools/call",
+  "params": {
+    "name": "orders_list",
+    "arguments": {
+      "status": "open",
+      "created_at_min": "2026-02-22T00:00:00Z",
+      "limit": 25
+    }
+  }
+}
+```
+
+## Response
+
+The server returns results in MCP content format:
+
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Found 12 open orders since Feb 22, 2026:\n\n1. Order #1042 — $234.00 — John Smith — Unfulfilled\n2. Order #1043 — $89.00 — Jane Doe — Partially fulfilled\n..."
+    }
+  ]
+}
+```
+
+## Error Response
+
+When a tool invocation fails:
+
+```json
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Error: SHOPIFY_API_ERROR — The requested resource was not found. Verify the order ID exists in your store."
+    }
+  ],
+  "isError": true
+}
+```
+
+## Tool Naming Convention
+
+All tools follow the pattern `{category}_{action}`:
+
+- `orders_list`, `orders_get`, `orders_create`
+- `customers_search`, `customers_update`, `customers_delete`
+- `inventory_adjust`, `inventory_transfer`
+
+This naming convention is deterministic and machine-parseable.

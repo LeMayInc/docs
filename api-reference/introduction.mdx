@@ -1,33 +1,74 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: "API Reference"
+sidebarTitle: "Introduction"
+description: "Technical reference for the LeMay Commerce MCP server and tool interface."
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+LeMay Commerce exposes its functionality through the [Model Context Protocol](https://modelcontextprotocol.io) (MCP). There is no REST API, no webhook-based integration, and no SDK to install beyond the MCP server itself.
 
-## Welcome
+## How It Works
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Your AI client connects to the LeMay Commerce MCP server, which provides a manifest of 129 tools. The AI client selects tools based on your natural language input and invokes them with structured parameters. The MCP server executes the corresponding Shopify GraphQL operation and returns the result.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+```
+AI Client  ←→  MCP Protocol  ←→  LeMay Commerce Server  ←→  Shopify Admin API
+```
 
-## Authentication
+## Connection
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The MCP server is distributed as an npm package. Configure your AI client to launch it with your store credentials:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "mcpServers": {
+    "lemay-commerce": {
+      "command": "npx",
+      "args": ["-y", "lemay-commerce"],
+      "env": {
+        "SHOPIFY_STORE": "your-store.myshopify.com",
+        "SHOPIFY_ACCESS_TOKEN": "your-access-token"
+      }
+    }
   }
-]
+}
 ```
+
+## Tool Schema
+
+Every tool follows the MCP tool specification:
+
+```typescript
+interface Tool {
+  name: string;          // Unique identifier (e.g., "orders_list")
+  description: string;   // Natural language description
+  inputSchema: {         // JSON Schema for parameters
+    type: "object";
+    properties: Record<string, JsonSchema>;
+    required?: string[];
+  };
+}
+```
+
+When invoked, the server returns a structured response conforming to the MCP content format.
+
+## Error Handling
+
+Tool invocations return errors in the MCP standard format:
+
+| Error Type | Description |
+|-----------|-------------|
+| `INVALID_PARAMS` | Required parameters missing or malformed |
+| `SHOPIFY_API_ERROR` | Shopify Admin API returned an error |
+| `PERMISSION_DENIED` | Tool not available on current subscription tier |
+| `RATE_LIMITED` | Shopify API rate limit exceeded (automatic retry) |
+
+## Next Steps
+
+<Columns cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Access token management and connection security.
+  </Card>
+  <Card title="MCP Protocol" icon="plug" href="/api-reference/mcp/overview">
+    Deep dive into the Model Context Protocol implementation.
+  </Card>
+</Columns>

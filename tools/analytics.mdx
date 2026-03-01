@@ -1,0 +1,45 @@
+---
+title: "Analytics"
+description: "Revenue reports, product performance, customer insights, and operational metrics."
+---
+
+The Analytics category provides read-only access to your store's performance data. These tools query Shopify's reporting APIs to return revenue figures, product performance metrics, customer acquisition data, and operational statistics.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `analytics_revenue` | Total revenue for a specified period | Startup |
+| `analytics_orders_summary` | Order count, average value, and fulfillment rate | Startup |
+| `analytics_products_performance` | Top-selling products by revenue or unit volume | Small Business |
+| `analytics_customers_acquisition` | New vs. returning customer metrics | Business |
+| `analytics_traffic` | Traffic sources and session data | Business |
+| `analytics_conversion` | Conversion rate by channel and period | Corporate |
+| `analytics_inventory_report` | Stock levels, velocity, and days-of-supply | Corporate |
+| `analytics_financial_summary` | Gross profit, refunds, taxes, and net revenue | Corporate |
+
+## Example Commands
+
+```
+What was our revenue last week?
+```
+Routes to `analytics_revenue` with date range for the previous seven days.
+
+```
+Show me the top 10 products by revenue this month
+```
+Routes to `analytics_products_performance` with sort by revenue descending, limit 10.
+
+```
+What's our conversion rate for the online store this quarter?
+```
+Routes to `analytics_conversion` with channel and quarterly date range.
+
+```
+How many new customers did we acquire in February?
+```
+Routes to `analytics_customers_acquisition` with date range and new customer filter.
+
+## Data Freshness
+
+Analytics tools return data as current as Shopify's reporting pipeline allows. For most metrics, this means data is available within minutes of the underlying event. Financial summaries may lag by up to one hour during high-volume periods.

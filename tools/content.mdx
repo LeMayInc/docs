@@ -1,0 +1,37 @@
+---
+title: "Content"
+description: "Manage pages, blog posts, and custom content through Shopify's CMS."
+---
+
+The Content category provides tools for managing Shopify's built-in content management system — pages, blog articles, and custom content types defined through metaobjects.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `content_pages_list` | List all pages | Startup |
+| `content_pages_get` | Retrieve a single page | Startup |
+| `content_pages_create` | Create a new page | Small Business |
+| `content_pages_update` | Update page content, title, or metadata | Small Business |
+| `content_pages_delete` | Delete a page | Business |
+| `content_blogs_list` | List all blogs | Startup |
+| `content_articles_list` | List articles in a blog | Startup |
+| `content_articles_create` | Create a new blog article | Small Business |
+| `content_articles_update` | Update an existing article | Small Business |
+
+## Example Commands
+
+```
+Show me all published pages
+```
+Routes to `content_pages_list` with published status filter.
+
+```
+Create a new page titled "Shipping Policy" with the following content...
+```
+Routes to `content_pages_create` with title and body HTML.
+
+```
+List all blog posts from the "News" blog
+```
+Routes to `content_articles_list` with blog handle filter.

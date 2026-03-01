@@ -1,0 +1,48 @@
+---
+title: "Settings"
+description: "Configure LeMay Commerce for your store's operational requirements."
+---
+
+LeMay Commerce settings are managed through the app's admin panel within your Shopify store. These settings control connection behavior, tool availability, and notification preferences.
+
+## Accessing Settings
+
+Navigate to **Shopify Admin** > **Apps** > **LeMay Commerce** > **Settings**.
+
+## Connection Settings
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| API Version | Shopify Admin API version | Latest stable |
+| Request Timeout | Maximum execution time per tool call | 30 seconds |
+| Retry Policy | Automatic retry on transient API errors | Enabled (3 attempts) |
+
+## Tool Configuration
+
+Your subscription tier determines which tools are available. Within your tier, all tools are enabled by default. You may disable specific tools if your workflow requires a restricted surface.
+
+<Warning>
+  Disabling tools does not reduce your subscription cost. Tool restrictions are for operational control only.
+</Warning>
+
+## Access Token Management
+
+Your MCP access token is generated during installation and displayed in the Settings panel. This token is scoped to your store and your subscription tier.
+
+- Tokens do not expire automatically
+- You may regenerate a token at any time (this invalidates the previous token)
+- Each store has exactly one active token
+
+Store your access token securely. It provides programmatic access to your store's data through the LeMay Commerce tool surface.
+
+## Webhook Configuration
+
+LeMay Commerce configures the following mandatory webhooks during installation:
+
+| Webhook | Purpose |
+|---------|---------|
+| `customers/data_request` | GDPR data access request |
+| `customers/redact` | GDPR customer data deletion |
+| `shop/redact` | GDPR shop data deletion |
+
+These webhooks are required by Shopify for App Store compliance and cannot be disabled.

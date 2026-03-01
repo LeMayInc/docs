@@ -1,0 +1,48 @@
+---
+title: "Security"
+description: "Security policy, data handling practices, and vulnerability reporting."
+---
+
+LeMay Commerce is built with a security-first architecture. No store data is cached, logged, or transmitted beyond the scope of each API request. Every tool execution is a stateless operation against Shopify's Admin API.
+
+## Data Handling
+
+**No data persistence.** LeMay Commerce does not maintain a database of your store data. Every tool call fetches data directly from Shopify's API, processes the response, and returns it to your AI client. When the request completes, no trace of the data remains in the LeMay Commerce system.
+
+**No telemetry on store data.** We do not log order amounts, customer names, product details, or any business data that passes through the tool surface. Usage telemetry is limited to tool invocation counts for billing purposes.
+
+**No third-party data sharing.** Your store data is never transmitted to any service other than Shopify's own API. There are no analytics providers, no third-party processors, and no data brokers in the pipeline.
+
+## Authentication
+
+LeMay Commerce uses Shopify's OAuth 2.0 flow for authentication. The access token generated during installation is scoped to your store and your subscription tier. Tokens are transmitted exclusively over HTTPS and stored securely within Shopify's app infrastructure.
+
+## Vulnerability Reporting
+
+Report security vulnerabilities to: **[security@lemay.app](mailto:security@lemay.app)**
+
+Do not open public GitHub issues for security vulnerabilities.
+
+**Response Timeline:**
+
+| Stage | Timeline |
+|-------|----------|
+| Acknowledgment | Within 24 hours |
+| Initial assessment | Within 72 hours |
+| Resolution target | Within 14 business days |
+
+## Compliance
+
+LeMay Commerce complies with:
+
+- **GDPR** — All three mandatory Shopify compliance webhooks are implemented (`customers/data_request`, `customers/redact`, `shop/redact`)
+- **CCPA** — Customer data deletion tools support California Consumer Privacy Act requests
+- **Shopify App Store requirements** — All security and privacy requirements for public Shopify apps
+
+## Legal
+
+This software is protected under the Curtis License&trade; v1.0. Unauthorized access, reverse engineering, or security testing without written authorization from LeMay constitutes a violation of 18 U.S.C. &sect; 1030 (Computer Fraud and Abuse Act) and may be prosecuted to the full extent of the law.
+
+---
+
+*A LeMay proprietary technology. Invented in USA. Made in Massachusetts. Copyright &copy; 2026 LeMay. All rights reserved.*

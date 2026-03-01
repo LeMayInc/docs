@@ -1,0 +1,41 @@
+---
+title: "Authentication"
+description: "Access token management and secure connection to LeMay Commerce."
+---
+
+LeMay Commerce authenticates through Shopify's OAuth 2.0 flow. During installation, your store grants an access token scoped to the permissions LeMay Commerce requires. This token is used for every GraphQL operation against your store's Admin API.
+
+## Access Token
+
+Your access token is available in the LeMay Commerce app settings within your Shopify admin panel: **Apps** > **LeMay Commerce** > **Settings** > **Access Token**.
+
+The token format is a standard Shopify access token string:
+
+```
+shpat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+## Environment Configuration
+
+Pass your credentials to the MCP server through environment variables:
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `SHOPIFY_STORE` | Your store's myshopify.com domain | Yes |
+| `SHOPIFY_ACCESS_TOKEN` | The access token from your app settings | Yes |
+
+```bash
+SHOPIFY_STORE=your-store.myshopify.com
+SHOPIFY_ACCESS_TOKEN=shpat_your_token_here
+```
+
+## Token Security
+
+- Store your access token in environment variables or a secrets manager. Never commit it to source control.
+- The token provides full read/write access to your store data within the granted scopes.
+- Regenerate your token immediately if you suspect it has been compromised. Navigate to **Apps** > **LeMay Commerce** > **Settings** > **Regenerate Token**.
+- Each store has exactly one active token. Regenerating a token immediately invalidates the previous one.
+
+## Transport Security
+
+All communication between the MCP server and Shopify's Admin API occurs over HTTPS with TLS 1.2 or higher. The MCP server does not accept unencrypted connections.

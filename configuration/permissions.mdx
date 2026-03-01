@@ -1,0 +1,35 @@
+---
+title: "Permissions"
+description: "API scopes and access control for LeMay Commerce."
+---
+
+LeMay Commerce requests a comprehensive set of Shopify API scopes during installation. Each scope maps to a specific commerce category and enables the corresponding tools.
+
+## Required Scopes
+
+| Scope | Category | Access |
+|-------|----------|--------|
+| `read_orders` / `write_orders` | Orders | List, create, update, cancel, refund |
+| `read_products` / `write_products` | Products | Full catalog management |
+| `read_customers` / `write_customers` | Customers | Customer lifecycle operations |
+| `read_inventory` / `write_inventory` | Inventory | Stock levels and adjustments |
+| `read_fulfillments` / `write_fulfillments` | Fulfillment | Shipping and tracking |
+| `read_shipping` / `write_shipping` | Shipping | Zones, rates, and carriers |
+| `read_discounts` / `write_discounts` | Discounts | Discount codes and automatic discounts |
+| `read_gift_cards` / `write_gift_cards` | Gift Cards | Gift card management |
+| `read_marketing_events` / `write_marketing_events` | Marketing | Campaigns and events |
+| `read_content` / `write_content` | Content | Pages and blog articles |
+| `read_themes` / `write_themes` | Themes | Theme deployment and configuration |
+| `read_reports` | Analytics | Revenue and performance reports |
+| `read_checkouts` / `write_checkouts` | Checkouts | Checkout management |
+| `read_draft_orders` / `write_draft_orders` | Draft Orders | Draft order lifecycle |
+| `read_locations` | Locations | Location listing and details |
+| `read_fulfillment_orders` / `write_fulfillment_orders` | Fulfillment Orders | Advanced fulfillment routing |
+
+## Why Broad Access
+
+LeMay Commerce is an operating system, not a point solution. Restricting scopes would fragment the tool surface and force users to reinstall when they need capabilities beyond their initial scope grant. Broad access ensures that upgrading your subscription tier immediately unlocks new tools without requiring re-authorization.
+
+## Staff Account Permissions
+
+If you install LeMay Commerce using a staff account rather than the store owner account, ensure the staff account has permissions for all areas you intend to operate on. LeMay Commerce cannot exceed the permissions of the installing account.

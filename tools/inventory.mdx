@@ -1,0 +1,39 @@
+---
+title: "Inventory"
+description: "Track stock levels, adjust quantities, transfer between locations, and manage inventory."
+---
+
+The Inventory category provides real-time visibility into stock levels across all locations and the tools to adjust, transfer, and manage inventory programmatically.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `inventory_levels` | List inventory levels for a product or location | Startup |
+| `inventory_adjust` | Adjust inventory quantity at a specific location | Small Business |
+| `inventory_set` | Set absolute inventory quantity (overwrite) | Small Business |
+| `inventory_transfer` | Transfer inventory between locations | Business |
+| `inventory_items` | List inventory items with tracking details | Startup |
+| `inventory_locations` | List all inventory locations | Startup |
+| `inventory_bulk_adjust` | Adjust inventory for multiple items in a single operation | Corporate |
+
+## Example Commands
+
+```
+How many units of SKU-WS-001 are in the Boston warehouse?
+```
+Routes to `inventory_levels` with SKU and location filters.
+
+```
+Add 50 units of SKU-WS-001 to the Boston warehouse
+```
+Routes to `inventory_adjust` with positive quantity delta.
+
+```
+Transfer 20 units of SKU-WS-001 from Boston to New York
+```
+Routes to `inventory_transfer` with source and destination locations.
+
+## Multi-Location Support
+
+LeMay Commerce fully supports Shopify's multi-location inventory system. Every inventory tool accepts a location parameter, and the `inventory_locations` tool provides a complete list of configured fulfillment locations. Inventory adjustments are atomic — the GraphQL mutation either succeeds entirely or fails without partial application.

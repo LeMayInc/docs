@@ -1,0 +1,36 @@
+---
+title: "Fulfillment"
+description: "Ship orders, generate labels, track packages, and process returns."
+---
+
+The Fulfillment category manages the post-purchase logistics pipeline — from creating shipments and adding tracking numbers to processing returns and managing third-party logistics providers.
+
+## Available Tools
+
+| Tool | Description | Tier |
+|------|-------------|------|
+| `fulfillment_create` | Create a fulfillment with line items and tracking | Small Business |
+| `fulfillment_update` | Update tracking information on an existing fulfillment | Small Business |
+| `fulfillment_cancel` | Cancel a fulfillment (unreceived by carrier) | Business |
+| `fulfillment_list` | List fulfillments for an order | Startup |
+| `fulfillment_tracking` | Add or update tracking numbers and carrier information | Small Business |
+| `fulfillment_services` | List configured fulfillment services | Business |
+| `fulfillment_orders_list` | List fulfillment orders with routing details | Business |
+| `fulfillment_orders_move` | Move fulfillment orders between locations | Corporate |
+
+## Example Commands
+
+```
+Ship order #1042 with USPS tracking 9400111899223456789012
+```
+Routes to `fulfillment_create` with carrier and tracking number.
+
+```
+Update tracking on order #1038 to UPS 1Z999AA10123456784
+```
+Routes to `fulfillment_tracking` with updated carrier and number.
+
+```
+Show me all unfulfilled fulfillment orders assigned to the Boston warehouse
+```
+Routes to `fulfillment_orders_list` with location and status filters.

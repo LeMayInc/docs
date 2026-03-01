@@ -1,0 +1,43 @@
+---
+title: "MCP Overview"
+sidebarTitle: "Overview"
+description: "The Model Context Protocol foundation of LeMay Commerce."
+---
+
+The [Model Context Protocol](https://modelcontextprotocol.io) is an open standard created by Anthropic for connecting AI applications to external tools, data sources, and services. LeMay Commerce implements an MCP server that exposes 129 commerce tools to any compatible AI client.
+
+## Why MCP
+
+MCP decouples the AI model from the tool implementation. This means:
+
+- **Client agnostic** — LeMay Commerce works with Claude Desktop, Cursor, VS Code, and any application that implements the MCP client specification.
+- **Schema-driven** — Every tool has a precise JSON Schema definition. The AI model sees exactly what parameters are required and what the tool does.
+- **Stateless execution** — Each tool invocation is independent. There is no session state, no conversation memory, and no side effects beyond the Shopify API operation.
+
+## Server Lifecycle
+
+1. **Startup** — The MCP server initializes and connects to your Shopify store using the provided credentials
+2. **Manifest** — The server sends a tool manifest listing all available tools (filtered by subscription tier)
+3. **Invocation** — The AI client selects a tool and sends a `tools/call` request with parameters
+4. **Execution** — The server validates parameters, constructs a GraphQL query, and executes it against Shopify
+5. **Response** — The server returns the result in MCP content format
+
+## Protocol Version
+
+LeMay Commerce implements MCP protocol version `2024-11-05` (the current stable specification).
+
+## Capabilities
+
+The server declares the following MCP capabilities:
+
+```json
+{
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  }
+}
+```
+
+Tool availability is determined at server startup based on your subscription tier and does not change during a session. Upgrading your tier requires restarting the MCP server to refresh the tool manifest.
